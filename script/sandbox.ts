@@ -1,22 +1,24 @@
-// I. Create base-parent class Locations
-//Holding the following info: teaser-image, City, ZipCode, address 
-//and a add a "display" () method;
-// II. Create two children classes - Restaurants && Events
-// 1.The Restaurants class inherits the teaser-image, City, ZipCode, address and 
-// in addition to the Restaurants class - tel.number, type of cuisine, (Vegan, Chinese..etc.);
-//update the display function of the Restaurant;
-// 2.Events class-inherits the teaser-image, City, ZipCode, address &&
-// additional props like EventDate ("") and EventTime("") 
-// display () must be updated;
+/*I. Create base-parent class Locations
+Holding the following info: teaser-image, City, ZipCode, address 
+and a add a "display" () method;
+II. Create two children classes - Restaurants && Events
+1.The Restaurants class inherits the teaser-image, City, ZipCode, address and 
+in addition to the Restaurants class - tel.number, type of cuisine, (Vegan, Chinese..etc.);
+update the display function of the Restaurant;
+2.Events class-inherits the teaser-image, City, ZipCode, address &&
+additional props like EventDate ("") and EventTime("") 
+display () must be updated;*/
 
-//Definition von Klassen, Methoden etc...
+//Definition of Classes, Methods, etc...
+
+// Creation of Parent class and defining the properties
 class Locations {
     image: string;
     city: string;
     zipCode: number;
     address: string;
     dateTimeVisited: Date = new Date();
-
+// Parent class constructor
     constructor(image, city, zipCode, address) {
         this.image = image;
         this.city = city;
@@ -24,7 +26,7 @@ class Locations {
         this.address = address;
         arrayLocations.push(this);
     }
-
+// Display func
     display() {
         let formattedDate = this.dateTimeVisited.getDate()+'.'+ (this.dateTimeVisited.getMonth()+ 1)+'.'+this.dateTimeVisited.getFullYear();
         // this HTML generation is split into 2 functions. The div is opened in this function and closed in the one below. It is a card from Bootstrap
@@ -42,7 +44,7 @@ class Locations {
 
         return generator;
     }
-// Closing div function applied to each card element
+// Closing div function
     closeCardDiv() {
         return `</div>
             </div>
@@ -110,7 +112,8 @@ function generateHtml() {
             result += element.display();
         } else {
             // console.log("Locations");
-            result += (element.display() + element.closeCardDiv());
+            // Apply the closecardDiv func to all elements =>
+            result += (element.display() + element.closeCardDiv()); 
         }
     });
 
@@ -123,7 +126,7 @@ function setMainHtml() {
     document.getElementById("contentDiv").innerHTML = generateHtml();
 }
 
-//-------Programmablauf----------
+//-------FlowChart----------
 
 // Creating new array for storing our objects
 var arrayLocations = [];
