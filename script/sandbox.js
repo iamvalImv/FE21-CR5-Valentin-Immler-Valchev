@@ -22,6 +22,7 @@ var __extends = (this && this.__extends) || (function () {
 var arrayLocations = [];
 var Locations = /** @class */ (function () {
     function Locations(image, city, zipCode, address) {
+        this.dateTimeVisited = new Date();
         this.image = image;
         this.city = city;
         this.zipCode = zipCode;
@@ -29,43 +30,41 @@ var Locations = /** @class */ (function () {
         arrayLocations.push(this);
     }
     Locations.prototype.display = function () {
-        //this HTML generation is split into 2 functions. The div is opened in this function and closed in the one below. It is a card from Bootstrap
-        var generator = "\n        <div class=\"card\" style=\"width: 18rem;\">\n                    <img src=\"" + this.image + "\" class=\"card-img-top\" alt=\"...\" />\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">" + this.city + "</h5>\n                        <p class=\"card-text\">\n                        " + this.zipCode + ", " + this.address + "\n                        </p>\n                        <!-- <a href=\"#!\" class=\"btn btn-primary\">Button</a> -->\n                    </div>\n                </div>\n              "; // elements are dynamically typed with   .this   keyword
+        var formattedDate = this.dateTimeVisited.getDate() + '.' + (this.dateTimeVisited.getMonth() + 1) + '.' + this.dateTimeVisited.getFullYear();
+        // this HTML generation is split into 2 functions. The div is opened in this function and closed in the one below. It is a card from Bootstrap
+        var generator = "\n        <div class =\"col-6 col-sm-4 col-md-3 p-2\">\n                <div class=\"card h-100\">\n                    <img src=\"" + this.image + "\" class=\"card-img-top\" alt=\"...\" />\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">" + this.city + "</h5>\n                        <p class=\"card-text\">\n                        " + this.zipCode + " " + this.address + "\n                        </p>                  \n                        <p class=\"card-text\">" + formattedDate + "</p>  \n              "; // elements are dynamically typed with   .this   keyword
         return generator;
     };
-    Locations.prototype.closingDiv = function () {
-        return "<a href=\"#\" class=\"btn btn-success d-flex justify-content-center\"><span class=\"price\">Show Price</span></a>\n        </div>\n      </div>";
+    // Closing div function applied to each card element
+    Locations.prototype.closeCardDiv = function () {
+        return "</div>\n            </div>\n        </div>";
     };
     return Locations;
 }());
+// Create new Locations
 new Locations("../img/music1.jpeg", "Vienna", "1010", "Na baba ti far4iloto");
-// function listItem(item) {
-//     for var i = 0; i < item.array.length; i++{
-//         var list = item.array[i];
-//         document.createElement("li");
-//         document.getElementByClass('box').appendChild(list);
-//         console.log(list);
-//     }
-// }
+new Locations("../img/music2.jpeg", "Salzburg", "5000", "Mainastrasse 2");
 // Extension of Restaurants child class
 var Restaurants = /** @class */ (function (_super) {
     __extends(Restaurants, _super);
-    function Restaurants(image, city, zipCode, address, Phone, Cuisine, Service) {
+    function Restaurants(image, city, zipCode, address, Phone, TypeOfRestaurant, Cuisine, Service) {
         var _this = _super.call(this, image, city, zipCode, address) || this;
         _this.phoneNumber = Phone;
+        _this.typeOfRestaurant = TypeOfRestaurant;
         _this.typeOfCuisine = Cuisine;
         _this.typeoFService = Service;
         return _this;
     }
+    // Display additional properties
     Restaurants.prototype.display = function () {
-        var generator = _super.prototype.display.call(this) + "\n        <p class=\"card-text\">PS: Number: " + this.phoneNumber + "</p>\n        <p class=\"card-text\">PS: Type of restaurat: " + this.typeOfRestaurant + "</p>\n        <p class=\"card-text\">PS: Type of cuisine " + this.typeOfCuisine + "</p>\n        <p class=\"card-text\">PS: Type of service " + this.typeoFService + "</p>\n        "; //splitting the card into two functions allows for less repeating code, only   ${super.generateHTML()} is called here because the closingDiv() function is inherited from the Vehicles Class
-        return generator;
+        var generator = _super.prototype.display.call(this) + "\n                <p class=\"card-text\">Number: " + this.phoneNumber + "</p>\n                <p class=\"card-text\">Type of restaurant: " + this.typeOfRestaurant + "</p>\n                <p class=\"card-text\">Type of cuisine: " + this.typeOfCuisine + "</p>\n                <p class=\"card-text\">Type of service: " + this.typeoFService + "</p>\n        ";
+        return generator + _super.prototype.closeCardDiv.call(this);
     };
     return Restaurants;
 }(Locations));
-// generateHTML(){
-new Restaurants("../img/image7.jpeg", "Vienna", "1040", "Strasse in 4. Bezirk", 0676, 8521463, "kitaiski", "Chinese");
-// Declaring a new restaurant-a new child element
+// Creating a new Rest object 
+new Restaurants("../img/image7.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "kitaiski", "Selbst");
+// Extension of Location-Event child class
 var Events = /** @class */ (function (_super) {
     __extends(Events, _super);
     function Events(image, city, zipCode, address, EventDate, EventTime, EventLocation) {
@@ -75,7 +74,36 @@ var Events = /** @class */ (function (_super) {
         _this.EventLocation = EventLocation;
         return _this;
     }
+    // Display additional properties
+    Events.prototype.display = function () {
+        var generator = _super.prototype.display.call(this) + "\n            <p class=\"card-text\">Date: " + this.EventDate + "</p>\n            <p class=\"card-text\">Time: " + this.EventTime + "</p>\n            <p class=\"card-text\">Location: " + this.EventLocation + "</p>        \n            ";
+        return generator + _super.prototype.closeCardDiv.call(this);
+    };
     return Events;
 }(Locations));
-// Declaring a new event-a new child element
-//  generateHTML(){
+// Creating a new event
+new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
+// Generating the main HTML doc--loading the whole var arrayLocations and returning the result /console.
+function generateHtml() {
+    var result = "";
+    arrayLocations.forEach(function (element) {
+        if (element instanceof Restaurants || element instanceof Events) {
+            // console.log("Restaurants or Events");
+            result += element.display();
+        }
+        else {
+            // console.log("Locations");
+            result += (element.display() + element.closeCardDiv());
+        }
+    });
+    // console.log(result);
+    return result;
+}
+//   console.log(generateHtml());
+generateHtml();
+//Call on load document
+// Function direct to main HTML file 
+function setMainHtml() {
+    document.getElementById("contentDiv").innerHTML = generateHtml();
+}
+setMainHtml();
