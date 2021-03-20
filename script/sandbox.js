@@ -18,8 +18,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-// var arrayLocations: (string | number | any)[] = [];
-var arrayLocations = [];
+//Definition von Klassen, Methoden etc...
 var Locations = /** @class */ (function () {
     function Locations(image, city, zipCode, address) {
         this.dateTimeVisited = new Date();
@@ -41,9 +40,6 @@ var Locations = /** @class */ (function () {
     };
     return Locations;
 }());
-// Create new Locations
-new Locations("../img/music1.jpeg", "Vienna", "1010", "Na baba ti far4iloto");
-new Locations("../img/music2.jpeg", "Salzburg", "5000", "Mainastrasse 2");
 // Extension of Restaurants child class
 var Restaurants = /** @class */ (function (_super) {
     __extends(Restaurants, _super);
@@ -62,9 +58,6 @@ var Restaurants = /** @class */ (function (_super) {
     };
     return Restaurants;
 }(Locations));
-// Creating a new Rest object 
-new Restaurants("../img/image7.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "kitaiski", "Selbst");
-// Extension of Location-Event child class
 var Events = /** @class */ (function (_super) {
     __extends(Events, _super);
     function Events(image, city, zipCode, address, EventDate, EventTime, EventLocation) {
@@ -81,8 +74,6 @@ var Events = /** @class */ (function (_super) {
     };
     return Events;
 }(Locations));
-// Creating a new event
-new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
 // Generating the main HTML doc--loading the whole var arrayLocations and returning the result /console.
 function generateHtml() {
     var result = "";
@@ -99,11 +90,20 @@ function generateHtml() {
     // console.log(result);
     return result;
 }
-//   console.log(generateHtml());
-generateHtml();
-//Call on load document
-// Function direct to main HTML file 
 function setMainHtml() {
     document.getElementById("contentDiv").innerHTML = generateHtml();
 }
+//-------Programmablauf----------
+// Creating new array for storing our objects
+var arrayLocations = [];
+// Create new Locations
+new Locations("../img/music1.jpeg", "Vienna", "1010", "Na baba ti far4iloto");
+new Locations("../img/music2.jpeg", "Salzburg", "5000", "Mainastrasse 2");
+// Creating a new Rest object 
+new Restaurants("../img/image7.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "kitaiski", "Selbst");
+new Restaurants("../img/image5.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "kitaiski", "Selbst");
+// Creating a new event
+new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
+//Call on load document
+// Function direct to main HTML file 
 setMainHtml();
