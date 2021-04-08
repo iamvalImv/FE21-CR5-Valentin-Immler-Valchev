@@ -28,7 +28,8 @@ class Locations {
     }
 // Display func
     display() {
-        let formattedDate = this.dateTimeVisited.getDate()+'.'+ (this.dateTimeVisited.getMonth()+ 1)+'.'+this.dateTimeVisited.getFullYear();
+        let myDate = this.randomDate('02/13/2016', '01/01/2019');
+        // let formattedDate = this.formatDate(this.dateTimeVisited);
         // this HTML generation is split into 2 functions. The div is opened in this function and closed in the one below. It is a card from Bootstrap
         let generator = `
         <div class ="col-6 col-sm-4 col-md-3 p-2">
@@ -39,11 +40,32 @@ class Locations {
                         <p class="card-text">
                         ${this.zipCode} ${this.address}
                         </p>                  
-                        <p class="card-text">${formattedDate}</p>  
+                        <p class="card-text">${myDate}</p>  
               `; // elements are dynamically typed with   .this   keyword
 
         return generator;
     }
+
+    randomDate(date1, date2){
+        function randomValueBetween(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+        var date1 = date1 || '01-01-1970'
+        var date2 = date2 || this.formatDate(new Date())
+        date1 = new Date(date1).getTime()
+        date2 = new Date(date2).getTime()
+        if( date1>date2){
+            return this.formatDate(new Date(randomValueBetween(date2,date1)))
+        } else{
+            return this.formatDate(new Date(randomValueBetween(date1, date2)))
+    
+        }
+    }
+
+    formatDate(date){
+        return date.getDate()+'.'+ (date.getMonth()+ 1)+'.'+date.getFullYear();
+    }
+
 // Closing div function
     closeCardDiv() {
         return `</div>
@@ -132,16 +154,23 @@ function setMainHtml() {
 var arrayLocations = [];
 
 // Create new Locations
-new Locations("../img/music1.jpeg", "Vienna", "1010", "Na baba ti far4iloto");
+new Locations("../img/image7.jpeg", "Vienna", "1010", "Clementinengasse 28");
 new Locations("../img/music2.jpeg", "Salzburg", "5000", "Mainastrasse 2");
+new Locations("../img/image6.jpeg", "Linz", "4500", "Mariahilfer 129");
+new Locations("../img/image6.jpeg", "Linz", "4500", "Mariahilfer 129");
+
 
 // Creating a new Rest object 
-new Restaurants("../img/image7.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "kitaiski", "Selbst");
-new Restaurants("../img/image5.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "kitaiski", "Selbst");
+new Restaurants("../img/image7.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "Local Deli", "Selbst");
+new Restaurants("../img/image2.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "Handmade", "Selbst");
+new Restaurants("../img/image1.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "Handmade", "Selbst");
+new Restaurants("../img/image1.jpeg", "Restaurant", "1040", "Strasse in 4. Bezirk", "06768521463", "Selbstabholung", "Handmade", "Selbst");
 
 // Creating a new event
 new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
-
+new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
+new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
+new Events("../img/image7.jpeg", "Event", "1040", "Strasse in 4. Bezirk", "EventDate", "EventTime", "EventLocation");
 //Call on load document
 // Function direct to main HTML file 
 setMainHtml();
